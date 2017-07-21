@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="form-signin">
+        <h2 class="form-signin-heading">Product edit</h2>
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Edit"/>
+        {{ form_end(edit_form) }}
+
+
+        <a href="{{ path('products_index') }}">Back to the list</a>
+
+        {{ form_start(delete_form) }}
+        <input class="btn btn-lg btn-danger btn-block" type="submit" value="Delete">
+        {{ form_end(delete_form) }}
+
+    </div>
+{% endblock %}

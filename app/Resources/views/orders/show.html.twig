@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Order</h1>
+
+                <h3>Seller: {{ order.userId }}</h3>
+                <h3>Sum: {{ order.sum }}</h3>
+
+{{ form_start(delete_form) }}
+<a class="btn btn-lg btn-primary" href="{{ path('orders_edit', { 'id': order.id }) }}">Edit</a>
+<input class="btn btn-lg btn-danger" type="submit" value="Delete">
+{{ form_end(delete_form) }}
+
+<a href="{{ path('products_index') }}">Back to the list</a>
+
+{% endblock %}

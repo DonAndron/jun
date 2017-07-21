@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2 class="sub-header">Products list</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Userid</th>
+                <th>Sum</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td><a href="{{ path('orders_show', { 'id': order.id }) }}">{{ order.id }}</a></td>
+                    <td>{{ order.userId }}</td>
+                    <td>{{ order.sum }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('orders_show', { 'id': order.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('orders_edit', { 'id': order.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('orders_new') }}">Create a new order</a>
+{% endblock %}
+
