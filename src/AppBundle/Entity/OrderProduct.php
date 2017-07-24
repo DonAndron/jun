@@ -24,14 +24,16 @@ class OrderProduct
     /**
      * @var int
      *
-     * @ORM\Column(name="OrderId", type="integer")
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="orderProducts")
+     * @ORM\JoinColumn(name="OrderId", referencedColumnName="id")
      */
     private $orderId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ProductId", type="integer")
+     * @ORM\ManyToOne(targetEntity="Products", inversedBy="orderProducts")
+     * @ORM\JoinColumn(name="ProductId", referencedColumnName="id")
      */
     private $productId;
 

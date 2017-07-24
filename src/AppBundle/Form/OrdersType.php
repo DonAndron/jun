@@ -13,9 +13,14 @@ class OrdersType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('userId')->add('sum');
+        $builder->add('product', 'entity', [
+            'class' => 'AppBundle:Products',
+            'property' => 'name',
+            'expanded' => true,
+            'multiple' => true
+        ]);
     }
-    
+
     /**
      * {@inheritdoc}
      */

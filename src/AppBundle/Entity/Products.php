@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,11 +37,24 @@ class Products
      */
     private $price;
 
+    /**
+     * One Product has Many OrderProduct.
+     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="productId", cascade={"all"})
+     */
+    private $orderProducts;
+
+    /**
+     *
+     */
+    public function __construct() {
+//        $this->orderProducts = new ArrayCollection();
+    }
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,7 +77,7 @@ class Products
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -86,10 +100,27 @@ class Products
     /**
      * Get price
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrice()
     {
         return $this->price;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+//    /**
+//     * Get Product
+//     * @return array
+//     */
+//    public function getOrder()
+//    {
+//        return $this->order;
+//    }
 }

@@ -25,6 +25,11 @@ body {
     border: 0;
 }
 
+.navbar-right {
+    float: right;
+    margin-right: -15px;
+}
+
 /*
  * Sidebar
  */

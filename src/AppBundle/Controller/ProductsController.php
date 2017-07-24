@@ -120,6 +120,22 @@ class ProductsController extends Controller
         return $this->redirectToRoute('products_index');
     }
 
+
+//    /**
+//     * @Route("/getList", name="products_list")
+//     * @Method({"GET", "POST"})
+//     *
+//     * @return string
+//     */
+//    public function getListAction()
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $products = $em->getRepository('AppBundle:Products')->findAll();
+//
+//        return new Response($products);
+//    }
+
     /**
      * Creates a form to delete a product entity.
      *
