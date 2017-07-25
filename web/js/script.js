@@ -3,9 +3,9 @@
  */
 $('#myModal').on('shown.bs.modal', function (e) {
     // do something...
-    var url = "/app_dev.php/products/getList";
+    var url = "/app_dev.php/orders/new";
     $.post(url, null, function(response) {
-        console.log(response);
+        $('.modal-body').append(response.formHtml);
     }, 'JSON');
 });
 

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+    {% extends app.request.isxmlhttprequest ? 'base.json.twig' :  'base.html.twig' %}
 
 {% block body %}
     <div class="form-signin">
@@ -6,10 +6,13 @@
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Create" />
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Create"/>
+
         {{ form_end(form) }}
 
-        <a href="{{ path('orders_index') }}">Back to the list</a>
+        {% if  not app.request.isxmlhttprequest %}
+            <a href="{{ path('orders_index') }}">Back to the list</a>
+        {% endif %}
     </div>
 {% endblock %}
 

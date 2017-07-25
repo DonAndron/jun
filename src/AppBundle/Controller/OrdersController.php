@@ -6,6 +6,7 @@ use AppBundle\Entity\Orders;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Orders as Order;
 
@@ -51,6 +52,20 @@ class OrdersController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('orders_show', array('id' => $order->getId()));
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            $formHtml = $this->renderView('orders/new.html.twig', array(
+                'order' => $order,
+                'form' => $form->createView(),
+            ));
+
+            return new JsonResponse(
+                array(
+                    'success' => true,
+                    'formHtml' => $formHtml
+                )
+            );
         }
 
         return $this->render('orders/new.html.twig', array(
