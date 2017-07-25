@@ -25,8 +25,8 @@ class Orders
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="UserId", type="integer")
+     * @ORM\ManyToOne(targetEntity="appBundle\Entity\User")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private $userId;
 
@@ -68,12 +68,13 @@ class Orders
     /**
      * Set userId
      *
+     * @param $userId
      * @return Orders
      * @ORM\PrePersist
      */
-    public function setUserId()
+    public function setUserId($userId)
     {
-        $this->userId = 2;
+        $this->userId = $userId;
 
         return $this;
     }

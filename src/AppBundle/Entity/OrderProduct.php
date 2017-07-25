@@ -66,7 +66,7 @@ class OrderProduct
      *
      * @return integer 
      */
-    public function getOrderId()
+    public function getOrder()
     {
         return $this->orderId;
     }
@@ -89,7 +89,7 @@ class OrderProduct
      *
      * @return integer 
      */
-    public function getProductId()
+    public function getProduct()
     {
         return $this->productId;
     }

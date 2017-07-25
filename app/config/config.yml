@@ -59,6 +59,13 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+services:
+    my.listener:
+        class: AppBundle\EventListener\EntityListener
+        arguments: ['@security.token_storage']
+        tags :
+                    - { name : doctrine.event_listener , event : prePersist }
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'

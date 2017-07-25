@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Products;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Products as Product;
+use AppBundle\Entity\User;
 
 /**
  * Product controller.
@@ -120,21 +122,6 @@ class ProductsController extends Controller
         return $this->redirectToRoute('products_index');
     }
 
-
-//    /**
-//     * @Route("/getList", name="products_list")
-//     * @Method({"GET", "POST"})
-//     *
-//     * @return string
-//     */
-//    public function getListAction()
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $products = $em->getRepository('AppBundle:Products')->findAll();
-//
-//        return new Response($products);
-//    }
 
     /**
      * Creates a form to delete a product entity.
