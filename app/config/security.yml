@@ -14,12 +14,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                login_path: /login
+                check_path: /login_check
+                use_forward : false
             logout:       true
             anonymous:    true
 
@@ -28,5 +30,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/products/, role: ROLE_USER }
-        - { path: ^/orders/, role: ROLE_USER }
+        - { path: ^/products, role: ROLE_USER }
+        - { path: ^/orders, role: ROLE_USER }
+        - { path: ^/, role: ROLE_USER }

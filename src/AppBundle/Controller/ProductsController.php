@@ -3,26 +3,25 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Products;
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Products as Product;
-use AppBundle\Entity\User;
 
 /**
  * Product controller.
  *
- * @Route("products")
+
  */
 class ProductsController extends Controller
 {
     /**
      * Lists all product entities.
      *
-     * @Route("/", name="products_index")
+     * @Route("/", name="homepage")
+     * @Route("/products", name="products_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -39,7 +38,7 @@ class ProductsController extends Controller
     /**
      * Creates a new product entity.
      *
-     * @Route("/new", name="products_new")
+     * @Route("/products/new", name="products_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -87,7 +86,7 @@ class ProductsController extends Controller
     /**
      * Finds and displays a product entity.
      *
-     * @Route("/{id}", name="products_show")
+     * @Route("/products/{id}", name="products_show")
      * @Method("GET")
      */
     public function showAction(Products $product)
@@ -103,7 +102,7 @@ class ProductsController extends Controller
     /**
      * Displays a form to edit an existing product entity.
      *
-     * @Route("/{id}/edit", name="products_edit")
+     * @Route("/products/{id}/edit", name="products_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Products $product)
@@ -152,7 +151,7 @@ class ProductsController extends Controller
     /**
      * Deletes a product entity.
      *
-     * @Route("/{id}", name="products_delete")
+     * @Route("/products/{id}", name="products_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Products $product)
