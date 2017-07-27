@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\OrderProduct;
 use AppBundle\Entity\Orders;
+use AppBundle\Repository\OrderProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -51,19 +53,27 @@ class OrdersController extends Controller
             $em->persist($order);
             $em->flush();
 
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(
+                    array(
+                        'success' => true,
+                        'row' => $this->renderView('orders/row.json.twig', array(
+                            'order' => $order
+                        ))
+                    )
+                );
+            }
             return $this->redirectToRoute('orders_show', array('id' => $order->getId()));
         }
 
         if ($request->isXmlHttpRequest()) {
-            $formHtml = $this->renderView('orders/new.html.twig', array(
-                'order' => $order,
-                'form' => $form->createView(),
-            ));
-
             return new JsonResponse(
                 array(
                     'success' => true,
-                    'formHtml' => $formHtml
+                    'formHtml' => $this->renderView('orders/new.html.twig', array(
+                        'order' => $order,
+                        'form' => $form->createView(),
+                    ))
                 )
             );
         }
@@ -103,9 +113,33 @@ class OrdersController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getRepository(OrderProduct::class)->removeOrderProductsByOrderId($order->getId());
             $this->getDoctrine()->getManager()->flush();
 
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(
+                    array(
+                        'success' => true,
+                        'typeId' => 'order_' . $order->getId(),
+                        'row' => $this->renderView('orders/row.json.twig', array(
+                            'order' => $order
+                        ))
+                    )
+                );
+            }
             return $this->redirectToRoute('orders_edit', array('id' => $order->getId()));
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                array(
+                    'success' => true,
+                    'formHtml' => $this->renderView('orders/edit.html.twig', array(
+                        'order' => $order,
+                        'edit_form' => $editForm->createView(),
+                    ))
+                )
+            );
         }
 
         return $this->render('orders/edit.html.twig', array(
@@ -147,7 +181,6 @@ class OrdersController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('orders_delete', array('id' => $order->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

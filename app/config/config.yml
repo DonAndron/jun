@@ -60,11 +60,11 @@ doctrine:
         auto_mapping: true
 
 services:
-    my.listener:
+    my.userListener:
         class: AppBundle\EventListener\EntityListener
         arguments: ['@security.token_storage']
         tags :
-                    - { name : doctrine.event_listener , event : prePersist }
+                   - { name : doctrine.event_listener , event : prePersist }
 
 # Swiftmailer Configuration
 swiftmailer:

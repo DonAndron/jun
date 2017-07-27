@@ -4,6 +4,7 @@ namespace AppBundle\EventListener;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\Orders;
+use AppBundle\Repository\OrderProductRepository;
 
 /**
  * Created by PhpStorm.
@@ -24,7 +25,6 @@ class EntityListener
     {
         $entity = $args->getEntity();
 
-        // only act on some "GenericEntity" entity
         if (!$entity instanceof Orders) {
             return;
         }

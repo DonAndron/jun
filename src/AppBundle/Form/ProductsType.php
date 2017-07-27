@@ -15,8 +15,7 @@ class ProductsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')->add ( 'price' , MoneyType :: class , array (
-            'currency' => 'RUB'
-//        ,
+            'currency' => 'RUB',
 //            'divisor' => 100 ,
         ));
     }

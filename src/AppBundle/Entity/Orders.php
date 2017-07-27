@@ -93,11 +93,14 @@ class Orders
      * Set sum
      *
      * @return Orders
-     * @ORM\PrePersist
+     * @ORM\PreFlush
      */
     public function setSum()
     {
-        $this->sum = 22;
+        $this->sum = 0;
+        foreach ($this->getProduct() as $product) {
+            $this->sum += $product->getPrice() * 100;
+        }
 
         return $this;
     }
@@ -109,7 +112,7 @@ class Orders
      */
     public function getSum()
     {
-        return $this->sum;
+        return $this->sum / 100;
     }
 
     /**
@@ -143,6 +146,7 @@ class Orders
      */
     public function setProduct($products)
     {
+//        $this->removeOrderProduct();
         foreach ($products as $product) {
             $orderProducts = new OrderProduct();
 
@@ -168,7 +172,7 @@ class Orders
      * @param $orderProduct
      * @return mixed
      */
-    public function removePo($orderProduct)
+    public function removeOrderProduct($orderProduct)
     {
         return $this->orderProducts->removeElement($orderProduct);
     }

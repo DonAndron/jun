@@ -1,0 +1,10 @@
+<tr  id="product_{{ product.id }}">
+    <td><a href="{{ path('products_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.price }}</td>
+    <td>
+        <a href="{{ path('products_show', { 'id': product.id }) }}">show</a>
+        <a class='modal-button' data-target='#myModal'
+           href="{{ path('products_edit', { 'id': product.id }) }}">edit</a>
+    </td>
+</tr>

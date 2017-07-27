@@ -7,6 +7,7 @@ use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Products as Product;
 use AppBundle\Entity\User;
@@ -52,7 +53,29 @@ class ProductsController extends Controller
             $em->persist($product);
             $em->flush();
 
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(
+                    array(
+                        'success' => true,
+                        'row' => $this->renderView('products/row.json.twig', array(
+                            'product' => $product
+                        ))
+                    )
+                );
+            }
             return $this->redirectToRoute('products_show', array('id' => $product->getId()));
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                array(
+                    'success' => true,
+                    'formHtml' => $this->renderView('products/new.html.twig', array(
+                        'product' => $product,
+                        'form' => $form->createView(),
+                    ))
+                )
+            );
         }
 
         return $this->render('products/new.html.twig', array(
@@ -92,7 +115,31 @@ class ProductsController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(
+                    array(
+                        'success' => true,
+                        'typeId' => 'product_' . $product->getId(),
+                        'row' => $this->renderView('products/row.json.twig', array(
+                            'product' => $product
+                        ))
+                    )
+                );
+            }
+
             return $this->redirectToRoute('products_edit', array('id' => $product->getId()));
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(
+                array(
+                    'success' => true,
+                    'formHtml' => $this->renderView('products/edit.html.twig', array(
+                        'product' => $product,
+                        'edit_form' => $editForm->createView(),
+                    ))
+                )
+            );
         }
 
         return $this->render('products/edit.html.twig', array(
@@ -135,7 +182,6 @@ class ProductsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('products_delete', array('id' => $product->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

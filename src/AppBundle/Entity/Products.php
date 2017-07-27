@@ -43,13 +43,6 @@ class Products
      */
     private $orderProducts;
 
-    /**
-     *
-     */
-    public function __construct() {
-//        $this->orderProducts = new ArrayCollection();
-    }
-
 
     /**
      * Get id
@@ -92,7 +85,7 @@ class Products
      */
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = $price * 100;
 
         return $this;
     }
@@ -104,7 +97,7 @@ class Products
      */
     public function getPrice()
     {
-        return $this->price;
+        return $this->price / 100;
     }
 
     /**
@@ -115,12 +108,4 @@ class Products
         return $this->getName();
     }
 
-//    /**
-//     * Get Product
-//     * @return array
-//     */
-//    public function getOrder()
-//    {
-//        return $this->order;
-//    }
 }

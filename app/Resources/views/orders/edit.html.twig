@@ -1,19 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends app.request.isxmlhttprequest ? 'base.json.twig' :  'base.html.twig' %}
 
 {% block body %}
     <div class="form-signin">
         <h2 class="form-signin-heading">Order edit</h2>
 
-        {{ form_start(edit_form) }}
+        {{ form_start(edit_form, {'action': path('orders_edit', { 'id': order.id }) }) }}
         {{ form_widget(edit_form) }}
         <input class="btn btn-lg btn-primary btn-block" type="submit" value="Edit"/>
         {{ form_end(edit_form) }}
 
-        {{ form_start(delete_form) }}
-        <input class="btn btn-lg btn-danger btn-block" type="submit" value="Delete">
-        {{ form_end(delete_form) }}
+        {% if  not app.request.isxmlhttprequest %}
+            {{ form_start(delete_form) }}
+            <input class="btn btn-lg btn-danger btn-block" type="submit" value="Delete">
+            {{ form_end(delete_form) }}
 
-        <a href="{{ path('orders_index') }}">Back to the list</a>
+            <a href={{ path('orders_index') }}>Back to the list</a>
+        {% endif %}
     </div>
 
 {% endblock %}
